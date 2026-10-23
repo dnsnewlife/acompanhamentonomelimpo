@@ -8,16 +8,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* Paleta: preto, branco e amarelo */
-            --primary: #facc15;        /* amarelo principal */
-            --primary-dark: #eab308;   /* amarelo escuro */
-            --primary-light: #fef08a;  /* amarelo claro */
-            --dark: #0a0a0a;           /* preto quase puro */
-            --dark-soft: #171717;      /* preto suave */
-            --dark-gray: #404040;      /* cinza escuro */
-            --mid-gray: #737373;       /* cinza médio */
-            --light-gray: #e5e5e5;     /* cinza claro */
-            --light: #fafafa;          /* branco suave */
+            --primary: #facc15;
+            --primary-dark: #eab308;
+            --primary-light: #fef08a;
+            --dark: #0a0a0a;
+            --dark-soft: #171717;
+            --dark-gray: #404040;
+            --mid-gray: #737373;
+            --light-gray: #e5e5e5;
+            --light: #fafafa;
             --white: #ffffff;
             --success: #16a34a;
             --warning: #eab308;
@@ -179,7 +178,6 @@
         .message-box {
             background: var(--light);
             border-radius: 16px; padding: 25px 30px; margin: 30px 0;
-            border-left: 4px solid var(--dark);
             border: 1px solid var(--light-gray);
             border-left: 4px solid var(--dark);
         }
@@ -210,7 +208,6 @@
             height: 100%; background: linear-gradient(90deg, var(--dark), var(--primary));
             border-radius: 10px; width: 0%;
             transition: width 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
-            position: relative;
         }
         
         .progress-percent {
@@ -251,24 +248,19 @@
         .security-badge { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 15px; }
         .security-badge i { color: var(--dark); }
         
-        /* Modo Consultor */
         .consultor-toggle {
             position: fixed; bottom: 20px; right: 20px;
             width: 44px; height: 44px; border-radius: 50%;
             background: var(--light-gray); color: var(--mid-gray); border: none;
             cursor: pointer; display: flex; align-items: center; justify-content: center;
-            opacity: 0.4; transition: var(--transition); z-index: 999; font-size: 18px;
-            margin: 0; padding: 0; width: 44px;
+            opacity: 0.4; transition: var(--transition); z-index: 999;
+            padding: 0; margin: 0;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
         }
         
         .consultor-toggle i { color: var(--mid-gray); font-size: 18px; }
         
-        .consultor-toggle:hover {
-            opacity: 1;
-            background: var(--dark);
-        }
-        
+        .consultor-toggle:hover { opacity: 1; background: var(--dark); }
         .consultor-toggle:hover i { color: var(--primary); }
         
         .consultor-panel {
@@ -318,7 +310,6 @@
             line-height: 1.5;
         }
         
-        /* Animations */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
@@ -349,7 +340,6 @@
 </head>
 <body>
     <div class="container">
-        <!-- Tela 1: Entrada -->
         <div id="tela-entrada" class="tela active">
             <header>
                 <div class="logo">
@@ -397,7 +387,6 @@
             </footer>
         </div>
         
-        <!-- Tela 2: Status -->
         <div id="tela-status" class="tela">
             <header>
                 <div class="logo">
@@ -468,7 +457,6 @@
         </div>
     </div>
     
-    <!-- Modo Consultor (oculto) -->
     <button class="consultor-toggle" id="consultor-toggle" title="Área do consultor">
         <i class="fas fa-cog"></i>
     </button>
@@ -509,53 +497,23 @@
     </div>
 
     <script>
-        // ============================================
-        // FERIADOS DE SÃO PAULO (CAPITAL) - 2025/2026
-        // Nacionais + estaduais SP + municipais SP
-        // ============================================
+        // Feriados SP (capital) 2025/2026
         const feriadosSP = [
-            // 2025
-            '2025-01-01', // Confraternização Universal
-            '2025-03-03', '2025-03-04', // Carnaval
-            '2025-04-18', // Paixão de Cristo
-            '2025-04-21', // Tiradentes
-            '2025-05-01', // Dia do Trabalho
-            '2025-06-19', // Corpus Christi
-            '2025-07-09', // Revolução Constitucionalista (SP)
-            '2025-09-07', // Independência
-            '2025-10-12', // Nossa Senhora Aparecida
-            '2025-11-02', // Finados
-            '2025-11-15', // Proclamação da República
-            '2025-11-20', // Consciência Negra
-            '2025-12-25', // Natal
-            
-            // 2026
-            '2026-01-01', // Confraternização Universal
-            '2026-01-25', // Aniversário da Cidade de São Paulo (municipal)
-            '2026-02-16', '2026-02-17', // Carnaval
-            '2026-04-03', // Paixão de Cristo
-            '2026-04-21', // Tiradentes
-            '2026-05-01', // Dia do Trabalho
-            '2026-06-04', // Corpus Christi
-            '2026-07-09', // Revolução Constitucionalista (SP)
-            '2026-09-07', // Independência
-            '2026-10-12', // Nossa Senhora Aparecida
-            '2026-11-02', // Finados
-            '2026-11-15', // Proclamação da República
-            '2026-11-20', // Consciência Negra
-            '2026-12-25', // Natal
+            '2025-01-01','2025-03-03','2025-03-04','2025-04-18','2025-04-21',
+            '2025-05-01','2025-06-19','2025-07-09','2025-09-07','2025-10-12',
+            '2025-11-02','2025-11-15','2025-11-20','2025-12-25',
+            '2026-01-01','2026-01-25','2026-02-16','2026-02-17','2026-04-03',
+            '2026-04-21','2026-05-01','2026-06-04','2026-07-09','2026-09-07',
+            '2026-10-12','2026-11-02','2026-11-15','2026-11-20','2026-12-25'
         ];
-        
         const feriadosUnicos = [...new Set(feriadosSP)];
-        
-        // ============================================
-        // REFERÊNCIAS DOM
-        // ============================================
+
+        // DOM
         const telaEntrada = document.getElementById('tela-entrada');
         const telaStatus = document.getElementById('tela-status');
         const formProcesso = document.getElementById('form-processo');
         const btnVoltar = document.getElementById('btn-voltar');
-        
+
         const statusNome = document.getElementById('status-nome');
         const statusDataInicio = document.getElementById('status-data-inicio');
         const diasTranscorridos = document.getElementById('dias-transcorridos');
@@ -564,7 +522,7 @@
         const progressText = document.getElementById('progress-text');
         const statusTag = document.getElementById('status-tag');
         const statusGeral = document.getElementById('status-geral');
-        
+
         const consultorToggle = document.getElementById('consultor-toggle');
         const consultorPanel = document.getElementById('consultor-panel');
         const pausaInicioInput = document.getElementById('pausa-inicio');
@@ -572,10 +530,8 @@
         const btnAplicarPausa = document.getElementById('btn-aplicar-pausa');
         const btnLimparPausa = document.getElementById('btn-limpar-pausa');
         const pausaInfo = document.getElementById('pausa-info');
-        
-        // ============================================
-        // ESTADO GLOBAL
-        // ============================================
+
+        // Estado
         let estado = {
             nome: '',
             dataInicio: null,
@@ -583,113 +539,85 @@
             pausaFim: null,
             ativo: false
         };
-        
-        // ============================================
-        // FUNÇÕES DE DATA
-        // ============================================
+
+        // Datas
         function formatarData(date) {
             const year = date.getFullYear();
             const month = String(date.getMonth() + 1).padStart(2, '0');
             const day = String(date.getDate()).padStart(2, '0');
-            return `${year}-${month}-${day}`;
+            return year + '-' + month + '-' + day;
         }
-        
+
         function calcularDiasUteis(dataInicio, dataFim) {
             const start = new Date(dataInicio);
             const end = new Date(dataFim);
             let count = 0;
-            
-            start.setHours(0, 0, 0, 0);
-            end.setHours(0, 0, 0, 0);
-            
+            start.setHours(0,0,0,0);
+            end.setHours(0,0,0,0);
             if (start > end) return 0;
-            
             const current = new Date(start);
-            
             while (current <= end) {
                 const dayOfWeek = current.getDay();
                 const dateStr = formatarData(current);
-                
                 if (dayOfWeek !== 0 && dayOfWeek !== 6) {
-                    if (!feriadosUnicos.includes(dateStr)) {
-                        count++;
-                    }
+                    if (!feriadosUnicos.includes(dateStr)) count++;
                 }
-                
                 current.setDate(current.getDate() + 1);
             }
-            
             return count;
         }
-        
+
         function calcularDiasPausados() {
             if (!estado.pausaInicio) return 0;
-            
             const hoje = new Date();
-            hoje.setHours(0, 0, 0, 0);
-            
+            hoje.setHours(0,0,0,0);
+
             let fim;
             if (estado.pausaFim) {
                 fim = new Date(estado.pausaFim);
             } else {
                 fim = new Date(hoje);
             }
-            fim.setHours(0, 0, 0, 0);
-            
+            fim.setHours(0,0,0,0);
+
             const inicio = new Date(estado.pausaInicio);
-            inicio.setHours(0, 0, 0, 0);
-            
+            inicio.setHours(0,0,0,0);
+
             if (inicio > hoje) return 0;
             if (fim > hoje) fim = new Date(hoje);
             if (fim < inicio) return 0;
-            
+
             const diaSeguinte = new Date(fim);
             diaSeguinte.setDate(diaSeguinte.getDate() + 1);
-            
+
             return calcularDiasUteis(inicio, diaSeguinte);
         }
-        
-        // ============================================
-        // LÓGICA DE PROGRESSO
-        // ============================================
-        function obterMensagemAndamento(diasEfetivos) {
-            if (diasEfetivos <= 0) {
-                return "Processo ainda não iniciado. Aguarde a data de início informada.";
-            }
-            if (diasEfetivos <= 5) {
-                return "Seu processo está aguardando distribuição ao Juiz responsável. Esta etapa inicial é crucial para garantir que seu caso seja direcionado ao profissional adequado.";
-            }
-            if (diasEfetivos <= 20) {
-                return "Processo em andamento, aguardando análise detalhada do Juiz. Nossa equipe está monitorando ativamente para garantir que tudo prossiga conforme planejado.";
-            }
-            if (diasEfetivos <= 40) {
-                return "Processo em fase de instrução. As taxas de liberação foram autorizadas e estamos aguardando a confirmação de pagamento para dar continuidade.";
-            }
-            if (diasEfetivos <= 55) {
-                return "Pagamento confirmado. Estamos aguardando a liberação final do processo junto ao tribunal para conclusão.";
-            }
-            if (diasEfetivos < 60) {
-                return "Processo em fase de finalização. Em breve você receberá a decisão final.";
-            }
+
+        // Mensagens e progresso
+        function obterMensagemAndamento(d) {
+            if (d <= 0) return "Processo ainda não iniciado. Aguarde a data de início informada.";
+            if (d <= 5) return "Seu processo está aguardando distribuição ao Juiz responsável. Esta etapa inicial é crucial para garantir que seu caso seja direcionado ao profissional adequado.";
+            if (d <= 20) return "Processo em andamento, aguardando análise detalhada do Juiz. Nossa equipe está monitorando ativamente para garantir que tudo prossiga conforme planejado.";
+            if (d <= 40) return "Processo em fase de instrução. As taxas de liberação foram autorizadas e estamos aguardando a confirmação de pagamento para dar continuidade.";
+            if (d <= 55) return "Pagamento confirmado. Estamos aguardando a liberação final do processo junto ao tribunal para conclusão.";
+            if (d < 60) return "Processo em fase de finalização. Em breve você receberá a decisão final.";
             return "Decisão Favorável! Parabéns, seu processo foi finalizado com sucesso. Estamos disponíveis para auxiliar nos próximos passos.";
         }
-        
-        function atualizarBarraProgresso(diasEfetivos) {
-            const prazo = 60;
-            let percentual = (diasEfetivos / prazo) * 100;
-            if (percentual > 100) percentual = 100;
-            if (percentual < 0) percentual = 0;
-            
-            progressBar.style.width = percentual + '%';
-            progressText.textContent = Math.round(percentual) + '%';
+
+        function atualizarBarraProgresso(d) {
+            let p = (d / 60) * 100;
+            if (p > 100) p = 100;
+            if (p < 0) p = 0;
+            progressBar.style.width = p + '%';
+            progressText.textContent = Math.round(p) + '%';
         }
-        
-        function atualizarStatusTag(diasEfetivos) {
-            if (diasEfetivos <= 0) {
+
+        function atualizarStatusTag(d) {
+            if (d <= 0) {
                 statusTag.textContent = 'Aguardando início';
                 statusTag.className = 'tag tag-waiting';
                 statusGeral.textContent = 'Não Iniciado';
-            } else if (diasEfetivos < 60) {
+            } else if (d < 60) {
                 statusTag.textContent = 'Em andamento';
                 statusTag.className = 'tag tag-progress';
                 statusGeral.textContent = 'Em Progresso';
@@ -699,60 +627,110 @@
                 statusGeral.textContent = 'Finalizado';
             }
         }
-        
-        // ============================================
-        // ATUALIZAR TELA
-        // ============================================
+
         function atualizarTelaStatus() {
             if (!estado.ativo) return;
-            
             const hoje = new Date();
             const diasBrutos = calcularDiasUteis(estado.dataInicio, hoje);
             const diasPausados = calcularDiasPausados();
             const diasEfetivos = Math.max(0, diasBrutos - diasPausados);
-            
+
             statusNome.textContent = estado.nome;
             statusDataInicio.textContent = new Date(estado.dataInicio).toLocaleDateString('pt-BR');
-            
+
             if (diasPausados > 0) {
                 const pausaAberta = !estado.pausaFim;
-                diasTranscorridos.textContent = `${diasEfetivos} de 60 dias úteis (${diasPausados} em pausa${pausaAberta ? ', em atraso' : ''})`;
+                diasTranscorridos.textContent = diasEfetivos + ' de 60 dias úteis (' + diasPausados + ' em pausa' + (pausaAberta ? ', em atraso' : '') + ')';
                 statusTag.textContent = pausaAberta ? 'Pausado (em atraso)' : 'Pausado';
                 statusTag.className = 'tag tag-paused';
-                statusGeral.textContent = pausaAberta 
-                    ? 'Congelado — parcela em atraso' 
-                    : 'Congelado — parcela regularizada';
+                statusGeral.textContent = pausaAberta ? 'Congelado — parcela em atraso' : 'Congelado — parcela regularizada';
             } else {
-                diasTranscorridos.textContent = `${diasEfetivos} de 60 dias úteis`;
+                diasTranscorridos.textContent = diasEfetivos + ' de 60 dias úteis';
                 atualizarStatusTag(diasEfetivos);
             }
-            
+
             mensagemAndamento.textContent = obterMensagemAndamento(diasEfetivos);
             atualizarBarraProgresso(diasEfetivos);
         }
-        
-        // ============================================
-        // EVENTOS
-        // ============================================
+
+        // Eventos
         formProcesso.addEventListener('submit', function(e) {
             e.preventDefault();
-            
             const nome = document.getElementById('nome').value.trim();
             const dataInicio = document.getElementById('data-inicio').value;
-            
             if (!nome || !dataInicio) return;
-            
+
             estado.nome = nome;
             estado.dataInicio = dataInicio;
             estado.pausaInicio = null;
             estado.pausaFim = null;
             estado.ativo = true;
-            
+
             pausaInicioInput.value = '';
             pausaFimInput.value = '';
             pausaInfo.textContent = 'Nenhuma pausa aplicada.';
-            
+
             atualizarTelaStatus();
-            
+
             telaEntrada.classList.remove('active');
-            telaStatus
+            telaStatus.classList.add('active');
+        });
+
+        btnVoltar.addEventListener('click', function() {
+            formProcesso.reset();
+            estado.ativo = false;
+            estado.pausaInicio = null;
+            estado.pausaFim = null;
+            telaStatus.classList.remove('active');
+            telaEntrada.classList.add('active');
+        });
+
+        consultorToggle.addEventListener('click', function(e) {
+            e.stopPropagation();
+            consultorPanel.classList.toggle('active');
+        });
+
+        btnAplicarPausa.addEventListener('click', function() {
+            if (!estado.ativo) {
+                alert('Nenhum processo ativo. Verifique um processo primeiro.');
+                return;
+            }
+            const inicio = pausaInicioInput.value;
+            const fim = pausaFimInput.value;
+            if (!inicio) {
+                alert('Informe a data em que a parcela ficou em atraso.');
+                return;
+            }
+            if (fim && new Date(fim) < new Date(inicio)) {
+                alert('A data de regularização não pode ser anterior à data de atraso.');
+                return;
+            }
+            estado.pausaInicio = inicio;
+            estado.pausaFim = fim || null;
+            const dias = calcularDiasPausados();
+            if (fim) {
+                pausaInfo.textContent = 'Pausa registrada: ' + dias + ' dias úteis entre ' + new Date(inicio).toLocaleDateString('pt-BR') + ' e ' + new Date(fim).toLocaleDateString('pt-BR') + '.';
+            } else {
+                pausaInfo.textContent = 'Pausa em aberto desde ' + new Date(inicio).toLocaleDateString('pt-BR') + ': ' + dias + ' dias úteis congelados até hoje.';
+            }
+            atualizarTelaStatus();
+        });
+
+        btnLimparPausa.addEventListener('click', function() {
+            estado.pausaInicio = null;
+            estado.pausaFim = null;
+            pausaInicioInput.value = '';
+            pausaFimInput.value = '';
+            pausaInfo.textContent = 'Nenhuma pausa aplicada.';
+            if (estado.ativo) atualizarTelaStatus();
+        });
+
+        document.addEventListener('click', function(e) {
+            if (!consultorPanel.contains(e.target) && e.target !== consultorToggle && !consultorToggle.contains(e.target)) {
+                consultorPanel.classList.remove('active');
+            }
+        });
+
+        const dataInicioInput = document.getElementById('data-inicio');
+        const hoje = new Date();
+        dataInicioInput.max
