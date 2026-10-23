@@ -733,4 +733,8 @@
 
         const dataInicioInput = document.getElementById('data-inicio');
         const hoje = new Date();
-        dataInicioInput.max
+        dataInicioInput.max = formatarData(hoje);
+        dataInicioInput.value = formatarData(hoje);
+    </script>
+</body>
+</html>
