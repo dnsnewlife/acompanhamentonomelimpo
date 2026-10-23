@@ -105,14 +105,15 @@
         
         label { display: block; margin-bottom: 10px; font-weight: 600; color: var(--dark); font-size: 14px; padding-left: 5px; }
         
-        input, select {
+        input, select, textarea {
             width: 100%; padding: 16px 20px 16px 50px;
             border: 2px solid var(--light-gray); border-radius: 12px;
             font-size: 16px; background: var(--white); transition: var(--transition);
             color: var(--dark);
+            font-family: 'Roboto', sans-serif;
         }
         
-        input:focus, select:focus {
+        input:focus, select:focus, textarea:focus {
             border-color: var(--primary); outline: none;
             box-shadow: 0 0 0 4px rgba(250, 204, 21, 0.25);
         }
@@ -193,7 +194,7 @@
         .message-icon i { color: var(--primary); font-size: 22px; }
         
         .message-header h3 { color: var(--dark); font-size: 1.1rem; }
-        .status-message { font-size: 16px; line-height: 1.7; color: var(--dark-soft); }
+        .status-message { font-size: 16px; line-height: 1.7; color: var(--dark-soft); white-space: pre-line; }
         
         .progress-container { margin: 40px 0; }
         .progress-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
@@ -267,7 +268,8 @@
             position: fixed; bottom: 80px; right: 20px;
             background: var(--white); border-radius: 16px; padding: 25px;
             box-shadow: 0 20px 50px rgba(0,0,0,0.25);
-            width: 320px; z-index: 1000; display: none;
+            width: 340px; max-height: 80vh; overflow-y: auto;
+            z-index: 1000; display: none;
             border: 2px solid var(--dark);
             border-top: 4px solid var(--primary);
         }
@@ -282,9 +284,33 @@
         
         .consultor-panel h4 i { color: var(--primary); }
         
+        .consultor-section {
+            border-top: 1px solid var(--light-gray);
+            padding-top: 15px;
+            margin-top: 15px;
+        }
+        
+        .consultor-section-title {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--mid-gray);
+            margin-bottom: 10px;
+            display: flex; align-items: center; gap: 6px;
+        }
+        
         .consultor-panel .form-group { margin-bottom: 12px; }
         .consultor-panel .form-group i { font-size: 14px; left: 12px; color: var(--dark); }
-        .consultor-panel input { padding: 10px 12px 10px 35px; font-size: 14px; border-radius: 8px; border-width: 1.5px; }
+        .consultor-panel input,
+        .consultor-panel textarea,
+        .consultor-panel select {
+            padding: 10px 12px 10px 35px; font-size: 14px; border-radius: 8px; border-width: 1.5px;
+        }
+        .consultor-panel textarea {
+            padding: 10px 12px; font-family: 'Roboto', sans-serif;
+            resize: vertical; min-height: 80px;
+        }
         .consultor-panel label { font-size: 12px; margin-bottom: 5px; }
         
         .consultor-panel button {
@@ -296,6 +322,10 @@
         .btn-pausar { background: var(--warning); color: var(--dark); }
         .btn-pausar i { color: var(--dark); }
         .btn-pausar:hover { background: #ca8a04; }
+        
+        .btn-mensagem { background: var(--dark); color: var(--white); }
+        .btn-mensagem i { color: var(--primary); }
+        .btn-mensagem:hover { background: var(--dark-soft); }
         
         .btn-retomar { background: var(--light); color: var(--dark); border: 2px solid var(--dark); }
         .btn-retomar i { color: var(--dark); }
@@ -325,7 +355,7 @@
             .glass-card { padding: 30px 20px; }
             h1 { font-size: 1.9rem; }
             h2 { font-size: 1.4rem; }
-            .consultor-panel { width: 280px; right: 10px; }
+            .consultor-panel { width: 300px; right: 10px; }
         }
         
         @media (max-width: 480px) {
@@ -334,7 +364,7 @@
             h1 { font-size: 1.6rem; }
             .logo { flex-direction: column; text-align: center; }
             .logo-text { text-align: center; }
-            .consultor-panel { width: 250px; }
+            .consultor-panel { width: 270px; }
         }
     </style>
 </head>
@@ -379,7 +409,7 @@
             </div>
             
             <footer>
-                <p>© 2025 Nome Limpo Vida Nova. Todos os direitos reservados.</p>
+                <p>© 2026 Nome Limpo Vida Nova. Todos os direitos reservados.</p>
                 <div class="security-badge">
                     <i class="fas fa-shield-alt"></i>
                     <span>Sistema seguro e confidencial</span>
@@ -448,7 +478,7 @@
             </div>
             
             <footer>
-                <p>© 2025 Nome Limpo Vida Nova.</p>
+                <p>© 2026 Nome Limpo Vida Nova.</p>
                 <div class="security-badge">
                     <i class="fas fa-sync-alt"></i>
                     <span>Consulte regularmente para acompanhar o progresso</span>
@@ -463,278 +493,368 @@
     
     <div class="consultor-panel" id="consultor-panel">
         <h4><i class="fas fa-user-tie"></i> Painel do Consultor</h4>
-        <p style="font-size:12px; color:var(--dark-soft); margin-bottom:15px; line-height:1.5;">
-            Informe o período em que a parcela esteve em atraso. O prazo será congelado nesse intervalo.
-        </p>
         
-        <div class="form-group">
-            <label for="pausa-inicio">Parcela em atraso desde</label>
-            <div style="position: relative;">
-                <i class="fas fa-calendar-times"></i>
-                <input type="date" id="pausa-inicio">
+        <div class="consultor-section">
+            <div class="consultor-section-title"><i class="fas fa-pause-circle"></i> Pausa por atraso</div>
+            <p style="font-size:12px; color:var(--dark-soft); margin-bottom:12px; line-height:1.5;">
+                Informe o período em que a parcela esteve em atraso. O prazo será congelado nesse intervalo. O dia da regularização conta como dia útil normal.
+            </p>
+            
+            <div class="form-group">
+                <label for="pausa-inicio">Parcela em atraso desde</label>
+                <div style="position: relative;">
+                    <i class="fas fa-calendar-times"></i>
+                    <input type="date" id="pausa-inicio">
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="pausa-fim">Regularizada em (vazio = ainda em atraso)</label>
+                <div style="position: relative;">
+                    <i class="fas fa-calendar-check"></i>
+                    <input type="date" id="pausa-fim">
+                </div>
+            </div>
+            
+            <button id="btn-aplicar-pausa" class="btn-pausar">
+                <i class="fas fa-pause"></i> Congelar Período
+            </button>
+            
+            <button id="btn-limpar-pausa" class="btn-retomar">
+                <i class="fas fa-play"></i> Limpar Pausa
+            </button>
+            
+            <div class="pausa-info" id="pausa-info">
+                Nenhuma pausa aplicada.
             </div>
         </div>
         
-        <div class="form-group">
-            <label for="pausa-fim">Regularizada em (vazio = ainda em atraso)</label>
-            <div style="position: relative;">
-                <i class="fas fa-calendar-check"></i>
-                <input type="date" id="pausa-fim">
+        <div class="consultor-section">
+            <div class="consultor-section-title"><i class="fas fa-comment"></i> Mensagem do Setor Jurídico</div>
+            <p style="font-size:12px; color:var(--dark-soft); margin-bottom:12px; line-height:1.5;">
+                Escreva um texto personalizado para o cliente. Se deixar vazio, o sistema usa a mensagem automática.
+            </p>
+            
+            <div class="form-group">
+                <textarea id="mensagem-custom" placeholder="Digite aqui a mensagem personalizada..."></textarea>
             </div>
-        </div>
-        
-        <button id="btn-aplicar-pausa" class="btn-pausar">
-            <i class="fas fa-pause"></i> Congelar Período
-        </button>
-        
-        <button id="btn-limpar-pausa" class="btn-retomar">
-            <i class="fas fa-play"></i> Limpar Pausa
-        </button>
-        
-        <div class="pausa-info" id="pausa-info">
-            Nenhuma pausa aplicada.
+            
+            <button id="btn-atualizar-mensagem" class="btn-mensagem">
+                <i class="fas fa-check"></i> Atualizar Mensagem
+            </button>
+            
+            <button id="btn-restaurar-mensagem" class="btn-retomar">
+                <i class="fas fa-undo"></i> Restaurar Mensagem Automática
+            </button>
         </div>
     </div>
+<script>
+    // Feriados SP (capital) 2025/2026
+    var feriadosSP = [
+        '2025-01-01','2025-03-03','2025-03-04','2025-04-18','2025-04-21',
+        '2025-05-01','2025-06-19','2025-07-09','2025-09-07','2025-10-12',
+        '2025-11-02','2025-11-15','2025-11-20','2025-12-25',
+        '2026-01-01','2026-01-25','2026-02-16','2026-02-17','2026-04-03',
+        '2026-04-21','2026-05-01','2026-06-04','2026-07-09','2026-09-07',
+        '2026-10-12','2026-11-02','2026-11-15','2026-11-20','2026-12-25'
+    ];
+    var feriadosUnicos = feriadosSP.filter(function(v, i, a) { return a.indexOf(v) === i; });
 
-    <script>
-        // Feriados SP (capital) 2025/2026
-        const feriadosSP = [
-            '2025-01-01','2025-03-03','2025-03-04','2025-04-18','2025-04-21',
-            '2025-05-01','2025-06-19','2025-07-09','2025-09-07','2025-10-12',
-            '2025-11-02','2025-11-15','2025-11-20','2025-12-25',
-            '2026-01-01','2026-01-25','2026-02-16','2026-02-17','2026-04-03',
-            '2026-04-21','2026-05-01','2026-06-04','2026-07-09','2026-09-07',
-            '2026-10-12','2026-11-02','2026-11-15','2026-11-20','2026-12-25'
-        ];
-        const feriadosUnicos = [...new Set(feriadosSP)];
+    // DOM
+    var telaEntrada = document.getElementById('tela-entrada');
+    var telaStatus = document.getElementById('tela-status');
+    var formProcesso = document.getElementById('form-processo');
+    var btnVoltar = document.getElementById('btn-voltar');
 
-        // DOM
-        const telaEntrada = document.getElementById('tela-entrada');
-        const telaStatus = document.getElementById('tela-status');
-        const formProcesso = document.getElementById('form-processo');
-        const btnVoltar = document.getElementById('btn-voltar');
+    var statusNome = document.getElementById('status-nome');
+    var statusDataInicio = document.getElementById('status-data-inicio');
+    var diasTranscorridos = document.getElementById('dias-transcorridos');
+    var mensagemAndamento = document.getElementById('mensagem-andamento');
+    var progressBar = document.getElementById('progress-bar');
+    var progressText = document.getElementById('progress-text');
+    var statusTag = document.getElementById('status-tag');
+    var statusGeral = document.getElementById('status-geral');
 
-        const statusNome = document.getElementById('status-nome');
-        const statusDataInicio = document.getElementById('status-data-inicio');
-        const diasTranscorridos = document.getElementById('dias-transcorridos');
-        const mensagemAndamento = document.getElementById('mensagem-andamento');
-        const progressBar = document.getElementById('progress-bar');
-        const progressText = document.getElementById('progress-text');
-        const statusTag = document.getElementById('status-tag');
-        const statusGeral = document.getElementById('status-geral');
+    var consultorToggle = document.getElementById('consultor-toggle');
+    var consultorPanel = document.getElementById('consultor-panel');
+    var pausaInicioInput = document.getElementById('pausa-inicio');
+    var pausaFimInput = document.getElementById('pausa-fim');
+    var btnAplicarPausa = document.getElementById('btn-aplicar-pausa');
+    var btnLimparPausa = document.getElementById('btn-limpar-pausa');
+    var pausaInfo = document.getElementById('pausa-info');
+    var mensagemCustomInput = document.getElementById('mensagem-custom');
+    var btnAtualizarMensagem = document.getElementById('btn-atualizar-mensagem');
+    var btnRestaurarMensagem = document.getElementById('btn-restaurar-mensagem');
 
-        const consultorToggle = document.getElementById('consultor-toggle');
-        const consultorPanel = document.getElementById('consultor-panel');
-        const pausaInicioInput = document.getElementById('pausa-inicio');
-        const pausaFimInput = document.getElementById('pausa-fim');
-        const btnAplicarPausa = document.getElementById('btn-aplicar-pausa');
-        const btnLimparPausa = document.getElementById('btn-limpar-pausa');
-        const pausaInfo = document.getElementById('pausa-info');
+    // Estado
+    var estado = {
+        nome: '',
+        dataInicio: null,
+        pausaInicio: null,
+        pausaFim: null,
+        mensagemCustom: '',
+        ativo: false
+    };
 
-        // Estado
-        let estado = {
-            nome: '',
-            dataInicio: null,
-            pausaInicio: null,
-            pausaFim: null,
-            ativo: false
-        };
+    // ============================================
+    // FUNÇÕES DE DATA (CORRIGIDAS PARA FUSO LOCAL)
+    // ============================================
 
-        // Datas
-        function formatarData(date) {
-            const year = date.getFullYear();
-            const month = String(date.getMonth() + 1).padStart(2, '0');
-            const day = String(date.getDate()).padStart(2, '0');
-            return year + '-' + month + '-' + day;
+    // Converte "YYYY-MM-DD" em Date LOCAL (não UTC).
+    // new Date("2026-10-01") interpreta como UTC meia-noite,
+    // o que no Brasil vira 30/09 21h. Aqui forçamos local.
+    function parseDataLocal(dataStr) {
+        if (!dataStr) return null;
+        var partes = dataStr.split('-');
+        var ano = parseInt(partes[0], 10);
+        var mes = parseInt(partes[1], 10) - 1; // JS conta mês de 0 a 11
+        var dia = parseInt(partes[2], 10);
+        return new Date(ano, mes, dia);
+    }
+
+    // Formata Date em "YYYY-MM-DD" (sem fuso)
+    function formatarData(date) {
+        var year = date.getFullYear();
+        var month = String(date.getMonth() + 1).padStart(2, '0');
+        var day = String(date.getDate()).padStart(2, '0');
+        return year + '-' + month + '-' + day;
+    }
+
+    // Formata Date para exibição "DD/MM/AAAA"
+    function exibirData(date) {
+        return date.toLocaleDateString('pt-BR');
+    }
+
+    // Conta dias úteis de dataInicio até dataFim, INCLUINDO as duas pontas.
+    // Aceita objetos Date (não strings), para evitar problemas de fuso.
+    function calcularDiasUteis(start, end) {
+        // Clona para não alterar os originais
+        var s = new Date(start.getTime());
+        var e = new Date(end.getTime());
+        s.setHours(0,0,0,0);
+        e.setHours(0,0,0,0);
+        if (s > e) return 0;
+        var count = 0;
+        var current = new Date(s.getTime());
+        while (current <= e) {
+            var dayOfWeek = current.getDay();
+            var dateStr = formatarData(current);
+            if (dayOfWeek !== 0 && dayOfWeek !== 6) {
+                if (feriadosUnicos.indexOf(dateStr) === -1) count++;
+            }
+            current.setDate(current.getDate() + 1);
+        }
+        return count;
+    }
+
+    // Dias úteis a descontar pela pausa.
+    // O dia da regularização (pausaFim) CONTA como dia útil normal,
+    // por isso contamos de pausaInicio até pausaFim - 1 (sem o +1 dia).
+    function calcularDiasPausados() {
+        if (!estado.pausaInicio) return 0;
+
+        var hoje = new Date();
+        hoje.setHours(0,0,0,0);
+
+        var inicio = parseDataLocal(estado.pausaInicio);
+        if (!inicio) return 0;
+
+        var fim;
+        if (estado.pausaFim) {
+            fim = parseDataLocal(estado.pausaFim);
+        } else {
+            fim = new Date(hoje.getTime());
+        }
+        fim.setHours(0,0,0,0);
+        inicio.setHours(0,0,0,0);
+
+        if (inicio > hoje) return 0;
+        if (fim > hoje) fim = new Date(hoje.getTime());
+        if (fim < inicio) return 0;
+
+        // Se início == fim, não há pausa (dia da regularização processa normal)
+        if (inicio.getTime() === fim.getTime()) return 0;
+
+        // Conta de inicio até o dia ANTERIOR ao fim
+        var diaAnterior = new Date(fim.getTime());
+        diaAnterior.setDate(diaAnterior.getDate() - 1);
+
+        return calcularDiasUteis(inicio, diaAnterior);
+    }
+
+    // ============================================
+    // MENSAGENS E PROGRESSO
+    // ============================================
+    function obterMensagemAutomatica(d) {
+        if (d <= 0) return "Processo ainda não iniciado. Aguarde a data de início informada.";
+        if (d <= 5) return "Seu processo está aguardando distribuição ao Juiz responsável. Esta etapa inicial é crucial para garantir que seu caso seja direcionado ao profissional adequado.";
+        if (d <= 20) return "Processo em andamento, aguardando análise detalhada do Juiz. Nossa equipe está monitorando ativamente para garantir que tudo prossiga conforme planejado.";
+        if (d <= 40) return "Processo em fase de instrução. As taxas de liberação foram autorizadas e estamos aguardando a confirmação de pagamento para dar continuidade.";
+        if (d <= 55) return "Pagamento confirmado. Estamos aguardando a liberação final do processo junto ao tribunal para conclusão.";
+        if (d < 60) return "Processo em fase de finalização. Em breve você receberá a decisão final.";
+        return "Decisão Favorável! Parabéns, seu processo foi finalizado com sucesso. Estamos disponíveis para auxiliar nos próximos passos.";
+    }
+
+    function obterMensagemAtual(diasEfetivos) {
+        if (estado.mensagemCustom && estado.mensagemCustom.trim() !== '') {
+            return estado.mensagemCustom;
+        }
+        return obterMensagemAutomatica(diasEfetivos);
+    }
+
+    function atualizarBarraProgresso(d) {
+        var p = (d / 60) * 100;
+        if (p > 100) p = 100;
+        if (p < 0) p = 0;
+        progressBar.style.width = p + '%';
+        progressText.textContent = Math.round(p) + '%';
+    }
+
+    function atualizarStatusTag(d) {
+        if (d <= 0) {
+            statusTag.textContent = 'Aguardando início';
+            statusTag.className = 'tag tag-waiting';
+            statusGeral.textContent = 'Não Iniciado';
+        } else if (d < 60) {
+            statusTag.textContent = 'Em andamento';
+            statusTag.className = 'tag tag-progress';
+            statusGeral.textContent = 'Em Progresso';
+        } else {
+            statusTag.textContent = 'Concluído';
+            statusTag.className = 'tag tag-completed';
+            statusGeral.textContent = 'Finalizado';
+        }
+    }
+
+    function atualizarTelaStatus() {
+        if (!estado.ativo) return;
+
+        var hoje = new Date();
+        var dataInicioDate = parseDataLocal(estado.dataInicio);
+        var diasBrutos = calcularDiasUteis(dataInicioDate, hoje);
+        var diasPausados = calcularDiasPausados();
+        var diasEfetivos = Math.max(0, diasBrutos - diasPausados);
+
+        statusNome.textContent = estado.nome;
+        statusDataInicio.textContent = exibirData(dataInicioDate);
+
+        if (diasPausados > 0) {
+            var pausaAberta = !estado.pausaFim;
+            diasTranscorridos.textContent = diasEfetivos + ' de 60 dias úteis (' + diasPausados + ' em pausa' + (pausaAberta ? ', em atraso' : '') + ')';
+            statusTag.textContent = pausaAberta ? 'Pausado (em atraso)' : 'Pausado';
+            statusTag.className = 'tag tag-paused';
+            statusGeral.textContent = pausaAberta ? 'Congelado — parcela em atraso' : 'Congelado — parcela regularizada';
+        } else {
+            diasTranscorridos.textContent = diasEfetivos + ' de 60 dias úteis';
+            atualizarStatusTag(diasEfetivos);
         }
 
-        function calcularDiasUteis(dataInicio, dataFim) {
-            const start = new Date(dataInicio);
-            const end = new Date(dataFim);
-            let count = 0;
-            start.setHours(0,0,0,0);
-            end.setHours(0,0,0,0);
-            if (start > end) return 0;
-            const current = new Date(start);
-            while (current <= end) {
-                const dayOfWeek = current.getDay();
-                const dateStr = formatarData(current);
-                if (dayOfWeek !== 0 && dayOfWeek !== 6) {
-                    if (!feriadosUnicos.includes(dateStr)) count++;
-                }
-                current.setDate(current.getDate() + 1);
-            }
-            return count;
+        mensagemAndamento.textContent = obterMensagemAtual(diasEfetivos);
+        atualizarBarraProgresso(diasEfetivos);
+    }
+
+    // ============================================
+    // EVENTOS
+    // ============================================
+    formProcesso.addEventListener('submit', function(e) {
+        e.preventDefault();
+        var nome = document.getElementById('nome').value.trim();
+        var dataInicio = document.getElementById('data-inicio').value;
+        if (!nome || !dataInicio) return;
+
+        estado.nome = nome;
+        estado.dataInicio = dataInicio; // guarda como string "YYYY-MM-DD"
+        estado.pausaInicio = null;
+        estado.pausaFim = null;
+        estado.mensagemCustom = '';
+        estado.ativo = true;
+
+        pausaInicioInput.value = '';
+        pausaFimInput.value = '';
+        pausaInfo.textContent = 'Nenhuma pausa aplicada.';
+        mensagemCustomInput.value = '';
+
+        atualizarTelaStatus();
+
+        telaEntrada.classList.remove('active');
+        telaStatus.classList.add('active');
+    });
+
+    btnVoltar.addEventListener('click', function() {
+        formProcesso.reset();
+        estado.ativo = false;
+        estado.pausaInicio = null;
+        estado.pausaFim = null;
+        estado.mensagemCustom = '';
+        telaStatus.classList.remove('active');
+        telaEntrada.classList.add('active');
+    });
+
+    consultorToggle.addEventListener('click', function(e) {
+        e.stopPropagation();
+        consultorPanel.classList.toggle('active');
+    });
+
+    btnAplicarPausa.addEventListener('click', function() {
+        if (!estado.ativo) {
+            alert('Nenhum processo ativo. Verifique um processo primeiro.');
+            return;
         }
-
-        function calcularDiasPausados() {
-            if (!estado.pausaInicio) return 0;
-            const hoje = new Date();
-            hoje.setHours(0,0,0,0);
-
-            let fim;
-            if (estado.pausaFim) {
-                fim = new Date(estado.pausaFim);
-            } else {
-                fim = new Date(hoje);
-            }
-            fim.setHours(0,0,0,0);
-
-            const inicio = new Date(estado.pausaInicio);
-            inicio.setHours(0,0,0,0);
-
-            if (inicio > hoje) return 0;
-            if (fim > hoje) fim = new Date(hoje);
-            if (fim < inicio) return 0;
-
-            const diaSeguinte = new Date(fim);
-            diaSeguinte.setDate(diaSeguinte.getDate() + 1);
-
-            return calcularDiasUteis(inicio, diaSeguinte);
+        var inicio = pausaInicioInput.value;
+        var fim = pausaFimInput.value;
+        if (!inicio) {
+            alert('Informe a data em que a parcela ficou em atraso.');
+            return;
         }
-
-        // Mensagens e progresso
-        function obterMensagemAndamento(d) {
-            if (d <= 0) return "Processo ainda não iniciado. Aguarde a data de início informada.";
-            if (d <= 5) return "Seu processo está aguardando distribuição ao Juiz responsável. Esta etapa inicial é crucial para garantir que seu caso seja direcionado ao profissional adequado.";
-            if (d <= 20) return "Processo em andamento, aguardando análise detalhada do Juiz. Nossa equipe está monitorando ativamente para garantir que tudo prossiga conforme planejado.";
-            if (d <= 40) return "Processo em fase de instrução. As taxas de liberação foram autorizadas e estamos aguardando a confirmação de pagamento para dar continuidade.";
-            if (d <= 55) return "Pagamento confirmado. Estamos aguardando a liberação final do processo junto ao tribunal para conclusão.";
-            if (d < 60) return "Processo em fase de finalização. Em breve você receberá a decisão final.";
-            return "Decisão Favorável! Parabéns, seu processo foi finalizado com sucesso. Estamos disponíveis para auxiliar nos próximos passos.";
+        if (fim && parseDataLocal(fim) < parseDataLocal(inicio)) {
+            alert('A data de regularização não pode ser anterior à data de atraso.');
+            return;
         }
-
-        function atualizarBarraProgresso(d) {
-            let p = (d / 60) * 100;
-            if (p > 100) p = 100;
-            if (p < 0) p = 0;
-            progressBar.style.width = p + '%';
-            progressText.textContent = Math.round(p) + '%';
+        estado.pausaInicio = inicio;
+        estado.pausaFim = fim || null;
+        var dias = calcularDiasPausados();
+        if (fim) {
+            pausaInfo.textContent = 'Pausa registrada: ' + dias + ' dias úteis entre ' + exibirData(parseDataLocal(inicio)) + ' e ' + exibirData(parseDataLocal(fim)) + '.';
+        } else {
+            pausaInfo.textContent = 'Pausa em aberto desde ' + exibirData(parseDataLocal(inicio)) + ': ' + dias + ' dias úteis congelados até hoje.';
         }
+        atualizarTelaStatus();
+    });
 
-        function atualizarStatusTag(d) {
-            if (d <= 0) {
-                statusTag.textContent = 'Aguardando início';
-                statusTag.className = 'tag tag-waiting';
-                statusGeral.textContent = 'Não Iniciado';
-            } else if (d < 60) {
-                statusTag.textContent = 'Em andamento';
-                statusTag.className = 'tag tag-progress';
-                statusGeral.textContent = 'Em Progresso';
-            } else {
-                statusTag.textContent = 'Concluído';
-                statusTag.className = 'tag tag-completed';
-                statusGeral.textContent = 'Finalizado';
-            }
+    btnLimparPausa.addEventListener('click', function() {
+        estado.pausaInicio = null;
+        estado.pausaFim = null;
+        pausaInicioInput.value = '';
+        pausaFimInput.value = '';
+        pausaInfo.textContent = 'Nenhuma pausa aplicada.';
+        if (estado.ativo) atualizarTelaStatus();
+    });
+
+    btnAtualizarMensagem.addEventListener('click', function() {
+        if (!estado.ativo) {
+            alert('Nenhum processo ativo. Verifique um processo primeiro.');
+            return;
         }
+        estado.mensagemCustom = mensagemCustomInput.value;
+        atualizarTelaStatus();
+    });
 
-        function atualizarTelaStatus() {
-            if (!estado.ativo) return;
-            const hoje = new Date();
-            const diasBrutos = calcularDiasUteis(estado.dataInicio, hoje);
-            const diasPausados = calcularDiasPausados();
-            const diasEfetivos = Math.max(0, diasBrutos - diasPausados);
+    btnRestaurarMensagem.addEventListener('click', function() {
+        estado.mensagemCustom = '';
+        mensagemCustomInput.value = '';
+        if (estado.ativo) atualizarTelaStatus();
+    });
 
-            statusNome.textContent = estado.nome;
-            statusDataInicio.textContent = new Date(estado.dataInicio).toLocaleDateString('pt-BR');
-
-            if (diasPausados > 0) {
-                const pausaAberta = !estado.pausaFim;
-                diasTranscorridos.textContent = diasEfetivos + ' de 60 dias úteis (' + diasPausados + ' em pausa' + (pausaAberta ? ', em atraso' : '') + ')';
-                statusTag.textContent = pausaAberta ? 'Pausado (em atraso)' : 'Pausado';
-                statusTag.className = 'tag tag-paused';
-                statusGeral.textContent = pausaAberta ? 'Congelado — parcela em atraso' : 'Congelado — parcela regularizada';
-            } else {
-                diasTranscorridos.textContent = diasEfetivos + ' de 60 dias úteis';
-                atualizarStatusTag(diasEfetivos);
-            }
-
-            mensagemAndamento.textContent = obterMensagemAndamento(diasEfetivos);
-            atualizarBarraProgresso(diasEfetivos);
+    document.addEventListener('click', function(e) {
+        if (!consultorPanel.contains(e.target) && e.target !== consultorToggle && !consultorToggle.contains(e.target)) {
+            consultorPanel.classList.remove('active');
         }
+    });
 
-        // Eventos
-        formProcesso.addEventListener('submit', function(e) {
-            e.preventDefault();
-            const nome = document.getElementById('nome').value.trim();
-            const dataInicio = document.getElementById('data-inicio').value;
-            if (!nome || !dataInicio) return;
-
-            estado.nome = nome;
-            estado.dataInicio = dataInicio;
-            estado.pausaInicio = null;
-            estado.pausaFim = null;
-            estado.ativo = true;
-
-            pausaInicioInput.value = '';
-            pausaFimInput.value = '';
-            pausaInfo.textContent = 'Nenhuma pausa aplicada.';
-
-            atualizarTelaStatus();
-
-            telaEntrada.classList.remove('active');
-            telaStatus.classList.add('active');
-        });
-
-        btnVoltar.addEventListener('click', function() {
-            formProcesso.reset();
-            estado.ativo = false;
-            estado.pausaInicio = null;
-            estado.pausaFim = null;
-            telaStatus.classList.remove('active');
-            telaEntrada.classList.add('active');
-        });
-
-        consultorToggle.addEventListener('click', function(e) {
-            e.stopPropagation();
-            consultorPanel.classList.toggle('active');
-        });
-
-        btnAplicarPausa.addEventListener('click', function() {
-            if (!estado.ativo) {
-                alert('Nenhum processo ativo. Verifique um processo primeiro.');
-                return;
-            }
-            const inicio = pausaInicioInput.value;
-            const fim = pausaFimInput.value;
-            if (!inicio) {
-                alert('Informe a data em que a parcela ficou em atraso.');
-                return;
-            }
-            if (fim && new Date(fim) < new Date(inicio)) {
-                alert('A data de regularização não pode ser anterior à data de atraso.');
-                return;
-            }
-            estado.pausaInicio = inicio;
-            estado.pausaFim = fim || null;
-            const dias = calcularDiasPausados();
-            if (fim) {
-                pausaInfo.textContent = 'Pausa registrada: ' + dias + ' dias úteis entre ' + new Date(inicio).toLocaleDateString('pt-BR') + ' e ' + new Date(fim).toLocaleDateString('pt-BR') + '.';
-            } else {
-                pausaInfo.textContent = 'Pausa em aberto desde ' + new Date(inicio).toLocaleDateString('pt-BR') + ': ' + dias + ' dias úteis congelados até hoje.';
-            }
-            atualizarTelaStatus();
-        });
-
-        btnLimparPausa.addEventListener('click', function() {
-            estado.pausaInicio = null;
-            estado.pausaFim = null;
-            pausaInicioInput.value = '';
-            pausaFimInput.value = '';
-            pausaInfo.textContent = 'Nenhuma pausa aplicada.';
-            if (estado.ativo) atualizarTelaStatus();
-        });
-
-        document.addEventListener('click', function(e) {
-            if (!consultorPanel.contains(e.target) && e.target !== consultorToggle && !consultorToggle.contains(e.target)) {
-                consultorPanel.classList.remove('active');
-            }
-        });
-
-        const dataInicioInput = document.getElementById('data-inicio');
-        const hoje = new Date();
-        dataInicioInput.max = formatarData(hoje);
-        dataInicioInput.value = formatarData(hoje);
-    </script>
-</body>
+    var dataInicioInput = document.getElementById('data-inicio');
+    var hoje = new Date();
+    dataInicioInput.max = formatarData(hoje);
+    dataInicioInput.value = formatarData(hoje);
+</script>
+    </body>
 </html>
